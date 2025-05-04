@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Настройки профиля{% endblock %}
+
+{% block content %}
+<h2>Настройки профиля</h2>
+
+<p><strong>Имя:</strong> {{ user.username }} 
+  <button class="btn btn-sm btn-outline-primary" id="edit-name-btn">Изменить никнейм</button>
+</p>
+
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+<p>
+    <strong>Пароль:</strong>
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'password_change' %}">🔒 Изменить пароль</a>
+</p>
+
+<form method="post" id="edit-form" style="display: none;">
+  {% csrf_token %}
+  <div class="mb-3">
+    {{ form.username.label_tag }} {{ form.username }}
+  </div>
+  <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+<script>
+  const editBtn = document.getElementById("edit-name-btn");
+  const form = document.getElementById("edit-form");
+
+  if (editBtn) {
+    editBtn.addEventListener("click", () => {
+      form.style.display = "block";
+      editBtn.style.display = "none";
+    });
+  }
+</script>
+{% endblock %}
